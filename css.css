@@ -1,0 +1,442 @@
+@font-face {
+    font-family: "GOTHAM";
+    src: url("res/font.ttf");
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    
+    font-family: "GOTHAM";
+}
+
+input{
+    -webkit-user-select: auto;
+    
+    position: absolute;
+    
+    height: 38px;
+    width: 400px;
+    /* padding-right: 10px; */
+    font-size: 25px;
+    background: none;
+    color: white;
+    border: none;
+}
+
+.wrap{
+    overflow: hidden;
+    background: url('res/BGR.png');
+    width: 100%;
+    height: 768px;
+    color: white;
+    background-size: cover;
+}
+.overlay{
+    position: absolute;
+    left: 0;top: 0;
+    background: url('res/OVERLAY.png');
+    width: 100%;
+    height: 768px;
+}
+.panel{
+    position: absolute;
+    
+    width: 100%;
+    height: 100%;
+}
+
+#panelIntro{    
+    text-align: center;
+    display: none;
+}
+#panelSelectStyle{
+    display: none;
+    text-align: center;
+}
+#panelGame{
+    display: none;
+}
+#panelReplay{
+    display: none;
+}
+#panelConfirm{
+    display: none;
+}
+#panelSend{
+    display: none;
+}
+#panelThank{
+    display: none;
+    text-align: center;
+}
+#panelConfig{
+    display: none;
+    padding: 10px;
+    background: gray;
+}
+
+#panelThank h1{
+    position: relative;
+    top:  50%;
+    
+    -webkit-transform: translateY(-50%);
+    
+    z-index: 99;
+}
+
+@-webkit-keyframes BOUNCE-RED-ANI {
+  0%   { background: none; }
+  50%   { background: #f8e703; }
+  100% { background: none; }
+}
+@-webkit-keyframes BOUNCE-ZOOM-ANI {
+  0%   { -webkit-transform: scale(1); }
+  50%   { -webkit-transform: scale(0.5); }
+  100% { -webkit-transform: scale(1); }
+}
+@-webkit-keyframes BOUNCE-OPA-ANI {
+  0%   { opacity: 0; }
+  50%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@-webkit-keyframes ROT-ANI {
+  0%   { -webkit-transform: rotate(0deg); }
+  100%   { -webkit-transform: rotate(360deg); }  
+}
+
+.animate{
+    -webkit-transform-origin: center;        
+}
+.bounce-red{
+    -webkit-animation: BOUNCE-RED-ANI 1s infinite; /* Safari 4+ */
+}
+.bounce-zoom{
+    -webkit-animation: BOUNCE-ZOOM-ANI 1s infinite; /* Safari 4+ */
+}
+.bounce-opacity{
+    -webkit-animation: BOUNCE-OPA-ANI 1s infinite;
+}
+.rotate{
+    -webkit-animation: ROT-ANI 5s infinite;
+    -webkit-animation-timing-function: linear;
+}
+.pauseAni{
+    -webkit-animation-play-state: paused;
+}
+.buttonMusic {
+    width: 250px;
+    height: 250px;
+    
+    /*background: rgba(255, 255, 255, 0.25);    */
+    
+    position: absolute;
+    
+}
+.buttonNext{
+    position: absolute;
+    right: 20px;
+    top: 316px;
+    width: 56px;
+    height: 123px;
+    background: url('res/ICON_NEXT.png');
+    display: none;
+}
+.buttonTut{
+    background: rgb(68, 68, 68);
+    padding: 20px;
+    position: absolute;
+    right: 240px;
+    top: 100px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.buttonRecord{
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    background: #f8e703;
+    left: 312px;
+    border-radius: 20px;
+    
+    display: none;
+}
+
+.buttonBSQ{
+    padding: 10px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+#mainGame{
+    position: absolute;
+    left: 40px;
+    top: 220px;
+    
+    -webkit-transform: scale(1.3);
+}
+
+#button1{
+    left: 0px;
+    top: 100px;
+    width: 136px;
+    height: 260px;
+}
+#button2{
+    width: 40px;height: 120px;background: #f8e703;position: absolute;left: 295px;top: 180px;border-radius: 10px;
+    display: none;
+}
+#button3{
+    width: 40px;height: 120px;background: #f8e703;position: absolute;left: 392px;top: 180px;border-radius: 10px;
+    display: none;
+}
+#button4{
+    left: 450px;
+    top: 100px;
+    width: 136px;
+    height: 260px;
+}
+
+#button5{
+    width: 136px;
+    height: 260px;
+    left: 140px;
+    top: 100px;
+}
+
+#button6{
+    width: 136px;
+    height: 260px;
+    left: 590px;
+    top: 100px;
+}
+
+.sprite-disc{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.sprite-wave{
+    position: absolute;
+    top: 30px;
+    width: 1024px;
+    height: 161px;
+    
+    background: url('res/WAVE-1.png');
+}
+.sprite-wave-overlay{
+    position: absolute;
+    top: 30px;
+    width: 1px;
+    height: 161px;
+    
+    background: url('res/WAVE-2.png');
+}
+.buttonMusic p{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
+
+.buttonTest{
+    width: 100px;
+    height: 50px;
+    padding: 10px
+}
+
+.menu{
+    position: absolute;
+    left: 90px;
+    top: 90px;
+}
+.buttonStyle{
+    width: 145px;    
+    height: 79px;
+    position: absolute;
+}
+.buttonOverlay{
+    width: 145px;    
+    height: 79px;
+    position: absolute;
+    display: none;
+}
+
+.posterStyle{
+    width: 690px;
+    height: 580px;
+    
+    position: absolute;
+}
+
+.menuRight{
+    position: absolute;
+    left: 690px;
+    top: 150px;
+}
+.menuLeft{
+    position: relative;
+}
+
+
+.sprite-dj{
+    position: absolute;   
+}
+
+.player{
+    position: absolute;
+    left: 90px;
+    top: 130px;
+    
+    -webkit-transform: scale(1.2);
+    
+}
+.player img{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#icon{
+    left:62px;
+    top:142px;
+}
+#icon2{
+    left:47px;
+    top:126px;
+}
+#icon3{
+    left:48px;
+    top:119px;    
+}
+#icon4{
+    left:30px;
+    top:110px;
+}
+
+.player-slider{
+    background: #f8e703;
+    width: 1px; /*460px*/
+    height: 23px;
+    position: absolute;
+    left: 100px;
+    top: 118px;
+    border-radius: 30px;
+    display: none;
+}
+
+.confirmSend{
+    position: absolute;
+    left: 230px;
+    top: 235px;
+}
+
+.confirmButton{
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    
+    width: 170px;
+    height: 45px;
+}
+
+.listUser{
+    background: whitesmoke;
+    padding: 10px;
+    border: 1px solid black;
+    color: black;
+}
+.buttonPause{
+    width: 114px;
+    height: 42px;
+    position: absolute;
+    left: 568px;
+    top: 110px;      
+}
+
+.textReplay{
+    position: absolute;
+    left: 230px;
+    top: 640px;
+    color: #f8e703;
+    font-size: 30px;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px)
+{
+    .wrap{
+        height: 320px;
+    }
+    .buttonMusic {
+        width: 120px;
+        height: 120px;
+        
+        margin: 1px;
+    }
+    
+    #mainGame{
+        -webkit-transform: scale(0.7);
+        left: 30px;
+        top: 30px;
+    }
+    
+    .menu{
+        -webkit-transform: scale(0.5);
+        left:  90px;
+        top:  16px;
+    }
+    .buttonTut{
+        display: none;
+    }
+    .buttonNext{
+        right: 10px;
+        top: 103px;
+        width: 40px;
+        height: 88px;
+        background: url('res/ICON_NEXT.png');
+        background-size: contain;
+    }
+    
+    .sprite-wave{
+        display: none;
+    }
+    .sprite-wave-overlay{
+        display: none;
+    }
+    
+    .textReplay{
+        left: 130px;
+        top: 270px;
+        font-size: 16px;
+    }
+    .player{
+        left: 38px;
+        top: 60px;
+        -webkit-transform: scale(0.7);
+    }
+    
+    .confirmSend{
+        -webkit-transform: scale(0.5);
+        left: 0px;
+        top: 50px;
+    }
+    
+    .formSend{
+        -webkit-transform: scale(0.5);
+        position: absolute;
+        left: 45px;
+        top: -20px;
+    }
+    #panelThank h1{
+        font-size: 20px;
+    }
+}

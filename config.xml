@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.bsq.test"
+        versionCode = "10" 
+        version     = "1.0.0" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>TROTAIDJ</name>
+
+    <description>
+        A music game with DJ Simulator.
+    </description>
+
+    <author href="http://www.cherryvietnam.com" email="thisisacherryvn@gmail.com">
+        bsq
+    </author>
+	
+	<preference name="phonegap-version" value="3.5.0" />
+	<preference name="orientation" value="landscape" />
+	<preference name="fullscreen" value="true" />  
+	<preference name="stay-in-webview" value="true" />
+	<preference name="target-device" value="universal" />
+	<preference name="deployment-target" value="7.0" />
+	
+	<gap:platform name="ios" />
+	<gap:platform name="android" />
+	
+	<gap:splash src="res/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
+	<gap:splash src="res/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
+	
+	<icon src="res/icon-57.png"            gap:platform="ios"        width="57" height="57" />
+    <icon src="res/icon-72.png"            gap:platform="ios"        width="72" height="72" />
+    <icon src="res/icon-57-2x.png"         gap:platform="ios"        width="114" height="114" />
+    <icon src="res/icon-72-2x.png"         gap:platform="ios"        width="144" height="144" />
+	 
+	<gap:plugin name="org.apache.cordova.battery-status" />
+	<gap:plugin name="org.apache.cordova.camera" />
+	<gap:plugin name="org.apache.cordova.media-capture" />
+	<gap:plugin name="org.apache.cordova.console" />
+	<gap:plugin name="org.apache.cordova.contacts" />
+	<gap:plugin name="org.apache.cordova.device" />
+	<gap:plugin name="org.apache.cordova.device-motion" />
+	<gap:plugin name="org.apache.cordova.device-orientation" />
+	<gap:plugin name="org.apache.cordova.dialogs" />
+	<gap:plugin name="org.apache.cordova.file" />
+	<gap:plugin name="org.apache.cordova.file-transfer" />
+	<gap:plugin name="org.apache.cordova.geolocation" />
+	<gap:plugin name="org.apache.cordova.globalization" />
+	<gap:plugin name="org.apache.cordova.inappbrowser" />
+	<gap:plugin name="org.apache.cordova.media" />
+	<gap:plugin name="org.apache.cordova.network-information" />
+	<gap:plugin name="org.apache.cordova.splashscreen" />
+	<gap:plugin name="org.apache.cordova.vibration" />
+	
+	
+	<gap:config-file platform="ios" parent="UIViewControllerBasedStatusBarAppearance">
+		<false/>
+	</gap:config-file>
+	<gap:config-file platform="ios" parent="UIStatusBarHidden">
+		<true/>
+	</gap:config-file>
+	
+	<access origin="*"/>
+	
+</widget>
