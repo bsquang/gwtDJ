@@ -658,8 +658,9 @@ function newCheckNote() {
                
             }else{
                 
-                var tempNote = arrayNote[counterNote];            
-            
+                var tempNote = arrayNote[counterNote];
+                
+                if(tempNote!=undefined)            
                 if (lastMainTime <= tempNote.time && mainTIME >= tempNote.time) {
                     if (lastNote != counterNote) {
     
