@@ -11,6 +11,8 @@ var interval = 1000 / 60,
     lastTime = (new Date()).getTime(),
     currentTime = 0,
     delta = 0;
+    
+
 
 
 var soundBGM;
@@ -22,7 +24,7 @@ var dataRecord = [];
 
 var position = 0;
 
-var lastNote;
+var lastNote = -1;
 
 
 var strSnd = [];
@@ -318,6 +320,8 @@ function onDeviceReady() {
             $($(".sprite-disc")[1]).removeClass("pauseAni");
         }
     });
+    
+    draw();
 }
 
 //FAIL 0546 180914
@@ -452,7 +456,6 @@ function resetGame() {
 
 
 var bRecord = false;
-
 function startRecord() {
 
     bRecord = true;
@@ -480,13 +483,16 @@ function stopMusic() {
     }
     if (bReplay) {
         bReplay = false;
+        
+        bBreak = true;
     }
 
 }
 
 function stopRecord() {
-
-
+    
+    bBreak = true;
+    
     soundBGM.pause();
     bRecord = false;
 
@@ -495,11 +501,10 @@ function stopRecord() {
     } else {
         soundBGM.seekTo(0);
     }
-
-    gotoScene("#panelReplay");
     
     breakApart();
-
+    
+    gotoScene("#panelReplay");
     arrVOICE[1].play();
 }
 
@@ -519,7 +524,6 @@ function startReplay() {
         }
 
         bReplay = true;
-
         chay();
 
 
@@ -559,34 +563,6 @@ function reload() {
     if (temp) window.location.href = "";
 }
 
-///////////////////////////////////
-var stopWatch = 0;
-var stopWatchLast = 0;
-var bStopWatch = false;
-
-function startTime() {
-    if (!bStopWatch) {
-        stopWatch = (new Date()).getTime();
-
-        bStopWatch = true;
-    }
-}
-
-function updateTime() {
-    if (bStopWatch) {
-
-        return stopWatchLast = (new Date()).getTime() - stopWatch;
-
-    }
-
-    return 0;
-}
-
-function stopTime() {
-    if (bStopWatch) {
-        bStopWatch = false;
-    }
-}
 
 var arrayNote = [];
 function breakApart(){
@@ -606,32 +582,143 @@ function breakApart(){
 ///////////////////////
 var counterTimer = 0;
 var bBreak = false;
+var mainTIME = 0;
 
 function testBSQ() {
     setTimeout(function() {
-
-        checkNote();
-
-        //counterTimer+=10;
-        //if (counterTimer >= 1000) {
-        //    console.log(counter++);
-        //    counterTimer = counterTimer-1000;
-        //}
-        
-        if (!bBreak) testBSQ();
+       
+        if (bBreak == false) {            
+            
+            checkNote();            
+            testBSQ();
+        }
         
     }, 5)
+}
+
+//////// SUPERNEW 
+var mainDurationBGM = 0;
+function superPlayTimer(){    
+    bBreak = false;    
+    soundBGM.play();
+    //draw();
+}
+
+var time;
+var elapsedDT = 0;
+function draw() {
+    requestAnimationFrame(draw);
+    var now = new Date().getTime(),
+        dt = now - (time || now);
+    
+    elapsedDT = dt;
+    
+    if(!bBreak) {
+        mainTIME += dt;
+        newCheckNote();    
+    }
+    
+    
+    time = now;
+}
+
+function newCheckNote() {
+    
+     if (bRecord) {        
+        
+        
+        var percent = mainTIME / (mainDurationBGM) * 100;
+        percent = Math.round(percent);
+        
+        $(".sprite-wave-overlay").width((percent * 1024 / 100) + "px");
+        if (percent >= 100) {
+            stopRecord();
+        }        
+
+    }
+    
+    if (bReplay) {
+        
+        var lastMainTime = (mainTIME - elapsedDT);
+        
+        //for(var i=0;i<arrayNote.length;i++){
+        
+         var percent = mainTIME / (mainDurationBGM) * 100;
+            percent = Math.round(percent);
+                        
+            $("#slider").width((percent * 460 / 100) + "px");
+        
+            if (percent >= 100) {
+               bBreak = true;
+               bReplay = false;
+               
+               confirmState();               
+               
+            }else{
+                
+                var tempNote = arrayNote[counterNote];            
+            
+                if (lastMainTime <= tempNote.time && mainTIME >= tempNote.time) {
+                    if (lastNote != counterNote) {
+    
+                        if (!bPHONEGAP) playSound(parseInt(tempNote.note));
+                        else playSound(tempNote.note);
+                        
+                        $("#time").html(counterNote);
+                        
+                        lastNote = counterNote;
+                        
+                        counterNote++;                    
+                    }
+                }
+                
+            }
+            
+            
+            
+            
+            
+            //if ((tempNote.time - 5) < mainTIME && (tempNote.time + 5) > mainTIME) {
+            //
+            //    if (lastNote != i) {
+            //
+            //        playSound(parseInt(tempNote.note));
+            //        counterNote++;
+            //        $("#time").html(counterNote);
+            //        
+            //        lastNote = i;
+            //    }
+            //}
+        //}
+        
+       
+        
+       
+        
+        //console.log(mainTIME + " " + Math.round(soundBGM.currentTime * 1000));    
+    }
+    
 }
 
 function chay() {
     bBreak = false;
 
-    testBSQ();
-    soundBGM.play();
-
-
+    //testBSQ();
+    
+    if (!bPHONEGAP) mainDurationBGM = soundBGM.duration * 1000;
+    
+    else {
+        
+        mainDurationBGM = soundBGM.getDuration() * 1000;
+        
+    }
+    
     counterTimer = 0;
     counterNote = 0;
+    
+    mainTIME = 0;
+    
+    superPlayTimer();
 }
 
 var counterNote = 0;
@@ -645,15 +732,12 @@ function checkNote() {
         if (!bPHONEGAP) {
             temp = Math.round(soundBGM.currentTime * 1000);
 
-
             var percent = temp / (soundBGM.duration * 1000) * 100;
             percent = Math.round(percent);
             
             $(".sprite-wave-overlay").width((percent * 1024 / 100) + "px");
 
             if (percent >= 100) {
-
-                bBreak = true;
                 stopRecord();
             }
 
@@ -691,8 +775,8 @@ function checkNote() {
 
         if (!bPHONEGAP) {
             var temp;
-            temp = Math.round(soundBGM.currentTime * 1000);
-            //temp = counterTimer;
+            //temp = Math.round(soundBGM.currentTime * 1000);
+            temp = mainTIME;
 
             var percent = temp / (soundBGM.duration * 1000) * 100;
             percent = Math.round(percent);
