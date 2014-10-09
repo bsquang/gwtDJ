@@ -25,172 +25,6 @@ var position = 0;
 var lastNote;
 
 
-//var time;
-//var elapsed = 0;
-//function gameLoop1() {
-//    setTimeout(function () {
-//        requestAnimationFrame(gameLoop);
-//        // Drawing code goes here
-//        var now = new Date().getTime(),
-//            dt = now - (time || now);
-//        time = now;
-//
-//        // Drawing code goes here... for example updating an 'x' position:
-//        if (elapsed > 1000) {
-//        
-//            elapsed = elapsed - 1000;
-//        }			    
-//        elapsed += dt;
-//        
-//        $("#time").html(elapsed);
-//
-//
-//    }, 1000 / 60);
-//}
-
-//function gameLoop() {
-//
-//    window.requestAnimationFrame(gameLoop);
-//    currentTime = (new Date()).getTime();
-//    delta = (currentTime - lastTime);
-//
-//    if (delta > interval) {
-//        
-//        //if (bRecord) {
-//            
-//            //var temp;
-//            //
-//            //if (!bPHONEGAP) {
-//            //    temp = Math.round(soundBGM.currentTime * 1000);
-//            //    
-//            //    
-//            //    var percent = temp/(soundBGM.duration*1000) * 100;                
-//            //    percent = Math.round(percent);
-//            //    
-//            //    //$("#time").html(percent);
-//            //    //$("#slider").width((percent*555/100)+"px");
-//            //    
-//            //    if (percent == 100) {
-//            //        stopRecord();
-//            //    }
-//            //    
-//            //} else {
-//            //    soundBGM.getCurrentPosition(
-//            //        // success callback
-//            //        function (position) {
-//            //            if (position > -1) {
-//            //                temp = (position * 1000);
-//            //                
-//            //                
-//            //                var percent = temp/(soundBGM.getDuration()*1000) * 100;                
-//            //                percent = Math.round(percent);
-//            //                
-//            //                if (percent == 100) {
-//            //                    stopRecord();
-//            //                }
-//            //                
-//            //            }
-//            //        },
-//            //        // error callback
-//            //        function (e) { }
-//            //    );
-//            //
-//            //}
-//        //}
-//        //if (bReplay) {
-//        //  
-//        //    var temp;
-//        //
-//        //    if (!bPHONEGAP) {
-//        //        temp = Math.round(soundBGM.currentTime * 1000);
-//        //        
-//        //        
-//        //        var percent = temp/(soundBGM.duration*1000) * 100;                
-//        //        percent = Math.round(percent);
-//        //        
-//        //        $("#time").html(percent);
-//        //        $("#slider").width((percent*555/100)+"px");
-//        //        
-//        //        if (percent == 100) {
-//        //            stopReplay();
-//        //            
-//        //            popUP();
-//        //        }
-//        //
-//        //        for (var i = 0; i < dataRecord.length; i++) {
-//        //            var tempRecord = dataRecord[i].split(",");
-//        //            var tempTime = tempRecord[0];
-//        //            var tempNote = tempRecord[1];
-//        //
-//        //            var temp1 = parseInt(tempTime);
-//        //
-//        //
-//        //
-//        //            if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
-//        //
-//        //                if (lastNote == 0 || lastNote != i) {
-//        //
-//        //                    playSound(parseInt(tempNote));
-//        //
-//        //                    console.log(temp1 + " " + parseInt(tempNote));
-//        //
-//        //                    lastNote = i;
-//        //                }
-//        //
-//        //
-//        //
-//        //            }
-//        //        }
-//        //        
-//        //        
-//        //    } else {
-//        //        soundBGM.getCurrentPosition(
-//        //            // success callback
-//        //            function (position) {
-//        //                if (position > -1) {
-//        //                    temp = (position * 1000);
-//        //
-//        //                    for (var i = 0; i < dataRecord.length; i++) {
-//        //                        var tempRecord = dataRecord[i].split(",");
-//        //                        var tempTime = tempRecord[0];
-//        //                        var tempNote = tempRecord[1];
-//        //
-//        //                        var temp1 = parseInt(tempTime);
-//        //                        
-//        //                        if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
-//        //
-//        //                            if (lastNote == 0 || lastNote != i) {
-//        //
-//        //                                playSound(tempNote);
-//        //
-//        //                                //console.log(temp1 + " " + parseInt(tempNote));
-//        //
-//        //                                lastNote = i;
-//        //                            }
-//        //
-//        //
-//        //                        }
-//        //                    }
-//        //
-//        //                }
-//        //            },
-//        //            // error callback
-//        //            function (e) {
-//        //                //console.log("Error getting pos=" + e);
-//        //            }
-//        //        );
-//        //
-//        //    }
-//        //
-//        //
-//        //}
-//
-//        lastTime = currentTime - (delta % interval);
-//    }
-//
-//
-//}
-
 var strSnd = [];
 strSnd[0] = "res/SOUND/snd-0.mp3";
 strSnd[1] = "res/SOUND/snd-2.mp3";
@@ -349,7 +183,7 @@ function onDeviceReady() {
     if (!bPHONEGAP) {
 
         arrBGM[0] = new Audio(strSnd[6]); arrBGM[0].volume = 0.5;
-        arrBGM[1] = new Audio(strSnd[7]); arrBGM[1].volume = 0.5;
+        arrBGM[1] = new Audio(strSnd[7]); arrBGM[1].volume = 0.3;
         arrBGM[2] = new Audio(strSnd[8]); arrBGM[2].volume = 0.5;
 
         soundBGM = arrBGM[currentBGM];
@@ -361,7 +195,7 @@ function onDeviceReady() {
         arrBGM[2] = new Media(strSnd[8], function() {}, function() {});
         
         arrBGM[0].setVolume(0.5);
-        arrBGM[1].setVolume(0.5);
+        arrBGM[1].setVolume(0.3);
         arrBGM[2].setVolume(0.5);
         
         soundBGM = arrBGM[currentBGM];
@@ -663,6 +497,8 @@ function stopRecord() {
     }
 
     gotoScene("#panelReplay");
+    
+    breakApart();
 
     arrVOICE[1].play();
 }
@@ -752,6 +588,21 @@ function stopTime() {
     }
 }
 
+var arrayNote = [];
+function breakApart(){
+    for (var i = 0; i < dataRecord.length; i++) {
+        var tempRecord = dataRecord[i].split(",");
+        var tempTime = tempRecord[0];
+        var tempNote = tempRecord[1];
+
+        var temp1 = parseInt(tempTime);
+        
+        arrayNote[i] = {'time':temp1,'note':tempNote};
+        
+        
+    }    
+}
+
 ///////////////////////
 var counterTimer = 0;
 var bBreak = false;
@@ -766,10 +617,9 @@ function testBSQ() {
         //    console.log(counter++);
         //    counterTimer = counterTimer-1000;
         //}
-
-
-
+        
         if (!bBreak) testBSQ();
+        
     }, 5)
 }
 
@@ -808,6 +658,7 @@ function checkNote() {
             }
 
         } else {
+            
             soundBGM.getCurrentPosition(
                 // success callback
                 function(position) {
@@ -855,32 +706,51 @@ function checkNote() {
                 bReplay = false;
                 confirmState();
             }
-
-            for (var i = 0; i < dataRecord.length; i++) {
-                var tempRecord = dataRecord[i].split(",");
-                var tempTime = tempRecord[0];
-                var tempNote = tempRecord[1];
-
-                var temp1 = parseInt(tempTime);
-
-
-
-                if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
+            
+            for(var i=0;i<arrayNote.length;i++){
+                var tempNote = arrayNote[i];
+                
+                if ((tempNote.time - 10) < temp && (tempNote.time + 10) > temp) {
 
                     if (lastNote != i) {
 
-                        playSound(parseInt(tempNote));
+                        playSound(parseInt(tempNote.note));
 
                         counterNote++;
 
                         $("#time").html(counterNote);
-
-                        console.log(temp1 + " " + parseInt(tempNote));
+                        //console.log(temp1 + " " + parseInt(tempNote));
 
                         lastNote = i;
                     }
                 }
             }
+
+            //for (var i = 0; i < dataRecord.length; i++) {
+            //    var tempRecord = dataRecord[i].split(",");
+            //    var tempTime = tempRecord[0];
+            //    var tempNote = tempRecord[1];
+            //
+            //    var temp1 = parseInt(tempTime);
+            //
+            //
+            //
+            //    if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
+            //
+            //        if (lastNote != i) {
+            //
+            //            playSound(parseInt(tempNote));
+            //
+            //            counterNote++;
+            //
+            //            //$("#time").html(counterNote);
+            //
+            //            //console.log(temp1 + " " + parseInt(tempNote));
+            //
+            //            lastNote = i;
+            //        }
+            //    }
+            //}
         } else {
             soundBGM.getCurrentPosition(
                 // success callback
@@ -900,20 +770,15 @@ function checkNote() {
                             bReplay = false;
                             confirmState();
                         }
-
-
-                        for (var i = 0; i < dataRecord.length; i++) {
-                            var tempRecord = dataRecord[i].split(",");
-                            var tempTime = tempRecord[0];
-                            var tempNote = tempRecord[1];
-
-                            var temp1 = parseInt(tempTime);
-
-                            if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
+                        
+                        for(var i=0;i<arrayNote.length;i++){
+                            var tempNote = arrayNote[i];
+                            
+                            if ((tempNote.time - 10) < temp && (tempNote.time + 10) > temp) {
 
                                 if (lastNote != i) {
 
-                                    playSound(tempNote);
+                                    playSound(tempNote.note);
 
                                     counterNote++;
 
@@ -926,6 +791,32 @@ function checkNote() {
 
                             }
                         }
+
+
+                        //for (var i = 0; i < dataRecord.length; i++) {
+                        //    var tempRecord = dataRecord[i].split(",");
+                        //    var tempTime = tempRecord[0];
+                        //    var tempNote = tempRecord[1];
+                        //
+                        //    var temp1 = parseInt(tempTime);
+                        //
+                        //    if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
+                        //
+                        //        if (lastNote != i) {
+                        //
+                        //            playSound(tempNote);
+                        //
+                        //            counterNote++;
+                        //
+                        //            $("#time").html(counterNote);
+                        //            //console.log(temp1 + " " + parseInt(tempNote));
+                        //
+                        //            lastNote = i;
+                        //        }
+                        //
+                        //
+                        //    }
+                        //}
 
                     }
                 },
