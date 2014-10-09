@@ -7,13 +7,10 @@ for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
     window.cancelAnimationFrame =
         window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
 }
-var interval = 1000 / 60,
-    lastTime = (new Date()).getTime(),
-    currentTime = 0,
-    delta = 0;
+
     
 
-var bsqDebug = true;
+var bsqDebug = false;
 
 
 var soundBGM;
@@ -49,17 +46,6 @@ var beat = [];
 
 
 var counter = 0;
-
-function playSoundReplay(id) {
-    if (bPHONEGAP) {
-
-        var tempID = parseInt(id);
-
-        beat[tempID].pause();
-        beat[tempID].seekTo(0);
-        beat[tempID].play();
-    }
-}
 
 function playSound(id) {
 
@@ -104,7 +90,9 @@ function playSound(id) {
         temp = mainTIME;
         var tempRecord = temp + "," + id;
         dataRecord.push(tempRecord);
-        $("#time").html(tempRecord + " length : " + dataRecord.length);
+        
+        if(bsqDebug) $("#time").html(tempRecord + " length : " + dataRecord.length);
+        
         console.log(tempRecord);
         //END 091014
         
@@ -334,6 +322,10 @@ function onDeviceReady() {
             $($(".sprite-disc")[1]).removeClass("pauseAni");
         }
     });
+    
+    if(!bsqDebug)  {
+        $("#time").hide();
+    }
     
     draw();
 }
