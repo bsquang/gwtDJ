@@ -8,10 +8,10 @@ for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
         window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
 }
 
-    
-
 var bsqDebug = false;
-
+if(!bsqDebug)  {
+    $("#time").hide();
+}
 
 var soundBGM;
 var arrBGM = [];
@@ -146,9 +146,7 @@ else {
 
 
 function onDeviceReady() {
-    if(!bsqDebug)  {
-        $("#time").hide();
-    }
+
 
     if (bPHONEGAP) {
         beat[0] = new Media(strSnd[0], function() {}, function() {});
@@ -331,26 +329,6 @@ function onDeviceReady() {
     draw();
 }
 
-//FAIL 0546 180914
-//var currentDuration = 0;
-//function getAtLastDuration(){
-//    if (bPHONEGAP) {
-//        var temp = soundBGM.getDuration();
-//        
-//        if (temp < 0) {
-//            
-//            return getAtLastDuration();
-//            
-//        }else
-//        {
-//            return temp;
-//        }
-//    }
-//    
-//    else return soundBGM.duration;
-//    
-//}
-
 var bTutorial = true;
 var stepTut = 0;
 
@@ -462,6 +440,7 @@ function resetGame() {
 }
 
 
+////////////////////////////////
 var bRecord = false;
 function startRecord() {
 
@@ -521,6 +500,8 @@ function stopRecord() {
     }
 }
 
+
+////////////////////////////////
 function startReplay() {
     if (!bReplay) {
 
@@ -566,13 +547,13 @@ function stopReplay() {
     stopMusic();
 }
 
-
+////////////////////////////////
 function reload() {
     var temp = confirm("Do you want to reload ?");
     if (temp) window.location.href = "";
 }
 
-
+///////////////////////////////
 var arrayNote = [];
 function breakApart(){
     for (var i = 0; i < dataRecord.length; i++) {
@@ -605,8 +586,22 @@ function testBSQ() {
     }, 5)
 }
 
-//////// SUPERNEW 
+//////// SUPERNEW
 var mainDurationBGM = 0;
+var counterNote = 0;
+
+function chay() {
+    bBreak = false;
+    
+    counterTimer = 0;
+    counterNote = 0;
+    
+    mainTIME = 0;
+    
+    superPlayTimer();
+}
+
+
 function superPlayTimer(){    
     bBreak = false;    
     soundBGM.play();
@@ -624,36 +619,31 @@ function draw() {
     
     if(!bBreak) {
         
-        $("#time").text(mainTIME);
+        if(bsqDebug) $("#time").text(mainTIME);
         
         mainTIME += dt;
         newCheckNote();    
-    }
-    
+    }    
     
     time = now;
 }
 
+
 function newCheckNote() {
     
      if (bRecord) {        
-        
-        
         var percent = mainTIME / (mainDurationBGM) * 100;
         percent = Math.round(percent);
         
         $(".sprite-wave-overlay").width((percent * 1024 / 100) + "px");
         if (percent >= 100) {
             stopRecord();
-        }        
-
+        }
     }
     
     if (bReplay) {
         
         var lastMainTime = (mainTIME - elapsedDT);
-        
-        //for(var i=0;i<arrayNote.length;i++){
         
          var percent = mainTIME / (mainDurationBGM) * 100;
             percent = Math.round(percent);
@@ -676,7 +666,7 @@ function newCheckNote() {
                         if (!bPHONEGAP) playSound(parseInt(tempNote.note));
                         else playSound(tempNote.note);
                         
-                        $("#time").html(counterNote);
+                        if(bsqDebug) $("#time").html(counterNote);
                         
                         lastNote = counterNote;
                         
@@ -685,251 +675,208 @@ function newCheckNote() {
                 }
                 
             }
-            
-            
-            
-            
-            
-            //if ((tempNote.time - 5) < mainTIME && (tempNote.time + 5) > mainTIME) {
-            //
-            //    if (lastNote != i) {
-            //
-            //        playSound(parseInt(tempNote.note));
-            //        counterNote++;
-            //        $("#time").html(counterNote);
-            //        
-            //        lastNote = i;
-            //    }
-            //}
-        //}
-        
-       
-        
-       
-        
-        //console.log(mainTIME + " " + Math.round(soundBGM.currentTime * 1000));    
     }
     
 }
 
-function chay() {
-    bBreak = false;
-
-    //testBSQ();
-    
-   
-    
-    counterTimer = 0;
-    counterNote = 0;
-    
-    mainTIME = 0;
-    
-    superPlayTimer();
-}
-
-var counterNote = 0;
-
-function checkNote() {
-
-    if (bRecord) {
-
-        var temp;
-
-        if (!bPHONEGAP) {
-            temp = Math.round(soundBGM.currentTime * 1000);
-
-            var percent = temp / (soundBGM.duration * 1000) * 100;
-            percent = Math.round(percent);
-            
-            $(".sprite-wave-overlay").width((percent * 1024 / 100) + "px");
-
-            if (percent >= 100) {
-                stopRecord();
-            }
-
-        } else {
-            
-            soundBGM.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        temp = (position * 1000);
 
 
-                        var percent = temp / (soundBGM.getDuration() * 1000) * 100;
-                        percent = Math.round(percent);
-                        
-                        $(".sprite-wave-overlay").width((percent * 1024 / 100) + "px");
-
-                        if (percent >= 100) {
-
-                            bBreak = true;
-                            stopRecord();
-                        }
-
-                    }
-                },
-                // error callback
-                function(e) {}
-            );
-
-        }
-
-    }
-
-    if (bReplay) {
-
-        if (!bPHONEGAP) {
-            var temp;
-            //temp = Math.round(soundBGM.currentTime * 1000);
-            temp = mainTIME;
-
-            var percent = temp / (soundBGM.duration * 1000) * 100;
-            percent = Math.round(percent);
 
 
-            $("#slider").width((percent * 460 / 100) + "px");
-
-            if (percent >= 100) {
-                bBreak = true;
-
-                bReplay = false;
-                confirmState();
-            }
-            
-            for(var i=0;i<arrayNote.length;i++){
-                var tempNote = arrayNote[i];
-                
-                if ((tempNote.time - 10) < temp && (tempNote.time + 10) > temp) {
-
-                    if (lastNote != i) {
-
-                        playSound(parseInt(tempNote.note));
-
-                        counterNote++;
-
-                        $("#time").html(counterNote);
-                        //console.log(temp1 + " " + parseInt(tempNote));
-
-                        lastNote = i;
-                    }
-                }
-            }
-
-            //for (var i = 0; i < dataRecord.length; i++) {
-            //    var tempRecord = dataRecord[i].split(",");
-            //    var tempTime = tempRecord[0];
-            //    var tempNote = tempRecord[1];
-            //
-            //    var temp1 = parseInt(tempTime);
-            //
-            //
-            //
-            //    if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
-            //
-            //        if (lastNote != i) {
-            //
-            //            playSound(parseInt(tempNote));
-            //
-            //            counterNote++;
-            //
-            //            //$("#time").html(counterNote);
-            //
-            //            //console.log(temp1 + " " + parseInt(tempNote));
-            //
-            //            lastNote = i;
-            //        }
-            //    }
-            //}
-        } else {
-            soundBGM.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        temp = (position * 1000);
-
-                        var percent = temp / (soundBGM.getDuration() * 1000) * 100;
-                        percent = Math.round(percent);
-
-
-                        $("#slider").width((percent * 460 / 100) + "px");
-
-                        if (percent >= 100) {
-                            bBreak = true;
-
-                            bReplay = false;
-                            confirmState();
-                        }
-                        
-                        for(var i=0;i<arrayNote.length;i++){
-                            var tempNote = arrayNote[i];
-                            
-                            if ((tempNote.time - 10) < temp && (tempNote.time + 10) > temp) {
-
-                                if (lastNote != i) {
-
-                                    playSound(tempNote.note);
-
-                                    counterNote++;
-
-                                    $("#time").html(counterNote);
-                                    //console.log(temp1 + " " + parseInt(tempNote));
-
-                                    lastNote = i;
-                                }
-
-
-                            }
-                        }
-
-
-                        //for (var i = 0; i < dataRecord.length; i++) {
-                        //    var tempRecord = dataRecord[i].split(",");
-                        //    var tempTime = tempRecord[0];
-                        //    var tempNote = tempRecord[1];
-                        //
-                        //    var temp1 = parseInt(tempTime);
-                        //
-                        //    if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
-                        //
-                        //        if (lastNote != i) {
-                        //
-                        //            playSound(tempNote);
-                        //
-                        //            counterNote++;
-                        //
-                        //            $("#time").html(counterNote);
-                        //            //console.log(temp1 + " " + parseInt(tempNote));
-                        //
-                        //            lastNote = i;
-                        //        }
-                        //
-                        //
-                        //    }
-                        //}
-
-                    }
-                },
-                // error callback
-                function(e) {
-                    //console.log("Error getting pos=" + e);
-                }
-            );
-        }
-
-    }
-}
+//function checkNote() {
+//
+//    if (bRecord) {
+//
+//        var temp;
+//
+//        if (!bPHONEGAP) {
+//            temp = Math.round(soundBGM.currentTime * 1000);
+//
+//            var percent = temp / (soundBGM.duration * 1000) * 100;
+//            percent = Math.round(percent);
+//            
+//            $(".sprite-wave-overlay").width((percent * 1024 / 100) + "px");
+//
+//            if (percent >= 100) {
+//                stopRecord();
+//            }
+//
+//        } else {
+//            
+//            soundBGM.getCurrentPosition(
+//                // success callback
+//                function(position) {
+//                    if (position > -1) {
+//                        temp = (position * 1000);
+//
+//
+//                        var percent = temp / (soundBGM.getDuration() * 1000) * 100;
+//                        percent = Math.round(percent);
+//                        
+//                        $(".sprite-wave-overlay").width((percent * 1024 / 100) + "px");
+//
+//                        if (percent >= 100) {
+//
+//                            bBreak = true;
+//                            stopRecord();
+//                        }
+//
+//                    }
+//                },
+//                // error callback
+//                function(e) {}
+//            );
+//
+//        }
+//
+//    }
+//
+//    if (bReplay) {
+//
+//        if (!bPHONEGAP) {
+//            var temp;
+//            //temp = Math.round(soundBGM.currentTime * 1000);
+//            temp = mainTIME;
+//
+//            var percent = temp / (soundBGM.duration * 1000) * 100;
+//            percent = Math.round(percent);
+//
+//
+//            $("#slider").width((percent * 460 / 100) + "px");
+//
+//            if (percent >= 100) {
+//                bBreak = true;
+//
+//                bReplay = false;
+//                confirmState();
+//            }
+//            
+//            for(var i=0;i<arrayNote.length;i++){
+//                var tempNote = arrayNote[i];
+//                
+//                if ((tempNote.time - 10) < temp && (tempNote.time + 10) > temp) {
+//
+//                    if (lastNote != i) {
+//
+//                        playSound(parseInt(tempNote.note));
+//
+//                        counterNote++;
+//
+//                        $("#time").html(counterNote);
+//                        //console.log(temp1 + " " + parseInt(tempNote));
+//
+//                        lastNote = i;
+//                    }
+//                }
+//            }
+//
+//            //for (var i = 0; i < dataRecord.length; i++) {
+//            //    var tempRecord = dataRecord[i].split(",");
+//            //    var tempTime = tempRecord[0];
+//            //    var tempNote = tempRecord[1];
+//            //
+//            //    var temp1 = parseInt(tempTime);
+//            //
+//            //
+//            //
+//            //    if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
+//            //
+//            //        if (lastNote != i) {
+//            //
+//            //            playSound(parseInt(tempNote));
+//            //
+//            //            counterNote++;
+//            //
+//            //            //$("#time").html(counterNote);
+//            //
+//            //            //console.log(temp1 + " " + parseInt(tempNote));
+//            //
+//            //            lastNote = i;
+//            //        }
+//            //    }
+//            //}
+//        } else {
+//            soundBGM.getCurrentPosition(
+//                // success callback
+//                function(position) {
+//                    if (position > -1) {
+//                        temp = (position * 1000);
+//
+//                        var percent = temp / (soundBGM.getDuration() * 1000) * 100;
+//                        percent = Math.round(percent);
+//
+//
+//                        $("#slider").width((percent * 460 / 100) + "px");
+//
+//                        if (percent >= 100) {
+//                            bBreak = true;
+//
+//                            bReplay = false;
+//                            confirmState();
+//                        }
+//                        
+//                        for(var i=0;i<arrayNote.length;i++){
+//                            var tempNote = arrayNote[i];
+//                            
+//                            if ((tempNote.time - 10) < temp && (tempNote.time + 10) > temp) {
+//
+//                                if (lastNote != i) {
+//
+//                                    playSound(tempNote.note);
+//
+//                                    counterNote++;
+//
+//                                    $("#time").html(counterNote);
+//                                    //console.log(temp1 + " " + parseInt(tempNote));
+//
+//                                    lastNote = i;
+//                                }
+//
+//
+//                            }
+//                        }
+//
+//
+//                        //for (var i = 0; i < dataRecord.length; i++) {
+//                        //    var tempRecord = dataRecord[i].split(",");
+//                        //    var tempTime = tempRecord[0];
+//                        //    var tempNote = tempRecord[1];
+//                        //
+//                        //    var temp1 = parseInt(tempTime);
+//                        //
+//                        //    if ((temp1 - 10) < temp && (temp1 + 10) > temp) {
+//                        //
+//                        //        if (lastNote != i) {
+//                        //
+//                        //            playSound(tempNote);
+//                        //
+//                        //            counterNote++;
+//                        //
+//                        //            $("#time").html(counterNote);
+//                        //            //console.log(temp1 + " " + parseInt(tempNote));
+//                        //
+//                        //            lastNote = i;
+//                        //        }
+//                        //
+//                        //
+//                        //    }
+//                        //}
+//
+//                    }
+//                },
+//                // error callback
+//                function(e) {
+//                    //console.log("Error getting pos=" + e);
+//                }
+//            );
+//        }
+//
+//    }
+//}
 
 //////////////
 function loadUser() {
-    
     if (localStorage.length>0) {
-        //$(".listUser").html('');
-        //for (var i = 0; i < localStorage.length; i++) {
-        //    var temp = "<p>" + localStorage[i] + "</p>";
-        //    $(".listUser").append(temp);
-        //}
-        
         $("#buttonSendAjax").text("Send to server " + "("+localStorage.length+")");
     }   
     
