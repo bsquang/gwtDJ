@@ -146,6 +146,9 @@ else {
 
 
 function onDeviceReady() {
+    if(!bsqDebug)  {
+        $("#time").hide();
+    }
 
     if (bPHONEGAP) {
         beat[0] = new Media(strSnd[0], function() {}, function() {});
@@ -323,9 +326,7 @@ function onDeviceReady() {
         }
     });
     
-    if(!bsqDebug)  {
-        $("#time").hide();
-    }
+    
     
     draw();
 }
