@@ -13,6 +13,7 @@ var interval = 1000 / 60,
     delta = 0;
     
 
+var bsqDebug = true;
 
 
 var soundBGM;
@@ -98,40 +99,49 @@ function playSound(id) {
 
     if (bRecord) {
         var temp;
-
-        if (!bPHONEGAP) {
-            temp = Math.round(soundBGM.currentTime * 1000);
-
-
-            var tempRecord = temp + "," + id;
-
-            dataRecord.push(tempRecord);
-
-            $("#time").html(tempRecord + " length : " + dataRecord.length);
-            console.log(tempRecord);
-        } else {
-            soundBGM.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        temp = (position * 1000) + 10;
-
-                        var tempRecord = temp + "," + id;
-
-                        dataRecord.push(tempRecord);
-
-                        $("#time").html(tempRecord + " length : " + dataRecord.length);
-
-                        console.log(tempRecord);
-                        //console.log((position) + " sec");
-                    }
-                },
-                // error callback
-                function(e) {
-                    //console.log("Error getting pos=" + e);
-                }
-            );
-        }
+        
+        //NEW 091014
+        temp = mainTIME;
+        var tempRecord = temp + "," + id;
+        dataRecord.push(tempRecord);
+        $("#time").html(tempRecord + " length : " + dataRecord.length);
+        console.log(tempRecord);
+        //END 091014
+        
+        //OLD
+        //if (!bPHONEGAP) {
+        //    temp = Math.round(soundBGM.currentTime * 1000);
+        //
+        //
+        //    var tempRecord = temp + "," + id;
+        //
+        //    dataRecord.push(tempRecord);
+        //
+        //    $("#time").html(tempRecord + " length : " + dataRecord.length);
+        //    console.log(tempRecord);
+        //} else {
+        //    soundBGM.getCurrentPosition(
+        //        // success callback
+        //        function(position) {
+        //            if (position > -1) {
+        //                temp = (position * 1000) + 10;
+        //
+        //                var tempRecord = temp + "," + id;
+        //
+        //                dataRecord.push(tempRecord);
+        //
+        //                $("#time").html(tempRecord + " length : " + dataRecord.length);
+        //
+        //                console.log(tempRecord);
+        //                //console.log((position) + " sec");
+        //            }
+        //        },
+        //        // error callback
+        //        function(e) {
+        //            //console.log("Error getting pos=" + e);
+        //        }
+        //    );
+        //}
 
 
     }
@@ -587,7 +597,7 @@ function breakApart(){
 
 ///////////////////////
 var counterTimer = 0;
-var bBreak = false;
+var bBreak = true;
 var mainTIME = 0;
 
 function testBSQ() {
@@ -620,6 +630,9 @@ function draw() {
     elapsedDT = dt;
     
     if(!bBreak) {
+        
+        $("#time").text(mainTIME);
+        
         mainTIME += dt;
         newCheckNote();    
     }
