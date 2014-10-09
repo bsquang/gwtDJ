@@ -240,6 +240,10 @@ function onDeviceReady() {
         } else {
             soundBGM.seekTo(0);
         }
+        
+        if (!bPHONEGAP) mainDurationBGM = soundBGM.duration * 1000;    
+        else { mainDurationBGM = soundBGM.getDuration() * 1000;
+        }
 
         gotoScene("#panelGame");
         //startRecord();
@@ -506,6 +510,12 @@ function stopRecord() {
     
     gotoScene("#panelReplay");
     arrVOICE[1].play();
+    
+    if (!bPHONEGAP) {
+        soundBGM.volume = 0.8;
+    }else{
+        soundBGM.setVolume(0.8);
+    }
 }
 
 function startReplay() {
@@ -517,11 +527,7 @@ function startReplay() {
 
         $("#icon").removeClass("bounce-opacity");
         
-        if (!bPHONEGAP) {
-            soundBGM.volume = 0.8;
-        }else{
-            soundBGM.setVolume(0.8);
-        }
+       
 
         bReplay = true;
         chay();
@@ -705,13 +711,7 @@ function chay() {
 
     //testBSQ();
     
-    if (!bPHONEGAP) mainDurationBGM = soundBGM.duration * 1000;
-    
-    else {
-        
-        mainDurationBGM = soundBGM.getDuration() * 1000;
-        
-    }
+   
     
     counterTimer = 0;
     counterNote = 0;
